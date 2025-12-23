@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Kyle Ducay!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #011F66; /* Midnight Blue */
+            font-family: 'Bangers', cursive;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: white;
+        }
+
+        /* --- BACKGROUND WEB PATTERN (CSS GRADIENTS) --- */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at center, transparent 0%, transparent 10%, rgba(255, 255, 255, 0.05) 10%, rgba(255, 255, 255, 0.05) 11%, transparent 11%),
+                radial-gradient(circle at center, transparent 0%, transparent 20%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.05) 21%, transparent 21%),
+                radial-gradient(circle at center, transparent 0%, transparent 30%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.05) 31%, transparent 31%),
+                radial-gradient(circle at center, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0.05) 41%, transparent 41%),
+                repeating-conic-gradient(from 0deg, transparent 0deg, transparent 10deg, rgba(255, 255, 255, 0.05) 10deg, rgba(255, 255, 255, 0.05) 11deg);
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* --- CORNER WEBS --- */
+        .corner-web {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-top: 5px solid rgba(255,255,255,0.2);
+            border-right: 5px solid rgba(255,255,255,0.2);
+            border-radius: 0 100% 0 0;
+            z-index: 1;
+        }
+
+        .top-left { top: 0; left: 0; transform: rotate(270deg); }
+        .top-right { top: 0; right: 0; }
+        .bottom-left { bottom: 0; left: 0; transform: rotate(180deg); }
+        .bottom-right { bottom: 0; right: 0; transform: rotate(90deg); }
+
+        /* --- CANVAS FOR CONFETTI --- */
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* --- HERO CARD --- */
+        .card-container {
+            z-index: 10;
+            text-align: center;
+            perspective: 1000px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #E23636 0%, #b30000 100%); /* Spidey Red */
+            border: 4px solid white;
+            padding: 2rem 4rem;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 20px #E23636, 
+                0 0 50px rgba(1, 31, 102, 0.8),
+                inset 0 0 20px rgba(0,0,0,0.3);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            max-width: 90%;
+        }
+
+        /* Mask/Eyes decoration on top of card */
+        .spidey-eyes {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 60px;
+            background: white;
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+            border: 3px solid black;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .spidey-eyes::before, .spidey-eyes::after {
+            content: '';
+            width: 40px;
+            height: 100%;
+            background: #011F66; /* Eye detail */
+            clip-path: ellipse(40% 50% at 50% 50%);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 10px;
+            text-shadow: 4px 4px 0px #011F66, 6px 6px 0px black;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #FFD700; /* Gold/Yellow for contrast */
+            text-shadow: 2px 2px 0px black;
+            margin-bottom: 20px;
+        }
+
+        .date {
+            font-size: 1.5rem;
+            background-color: black;
+            color: white;
+            display: inline-block;
+            padding: 5px 15px;
+            transform: rotate(-2deg);
+            box-shadow: 3px 3px 0px white;
+        }
+
+        .action-btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            background-color: #011F66;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 4px 4px 0px black;
+            text-transform: uppercase;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1) rotate(2deg);
+            background-color: #022a8a;
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 1.8rem; }
+            .card { padding: 2rem 1rem; width: 90%; }
+            .corner-web { width: 100px; height: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="corner-web top-left"></div>
+    <div class="corner-web top-right"></div>
+    <div class="corner-web bottom-left"></div>
+    <div class="corner-web bottom-right"></div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="card-container">
+        <div class="card">
+            <div class="spidey-eyes"></div>
+            
+            <p style="font-size: 1.2rem; margin-bottom: 5px; text-shadow: 1px 1px 0 black;">Your Friendly Neighborhood Greeting</p>
+            <h1>HAPPY BIRTHDAY!</h1>
+            <h2>KYLE DUCAY</h2>
+            <div class="date">DECEMBER 23, 2025</div>
+            
+            <br>
+            <button class="action-btn" onclick="fireWebs()">Shoot Web!</button>
+        </div>
+    </div>
+
+    <script>
+        // Setup Canvas
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        });
+
+        // Particle System
+        const particles = [];
+        const colors = ['#E23636', '#011F66', '#FFFFFF', '#FFD700']; // Red, Blue, White, Gold
+
+        class Particle {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 4;
+                this.speedX = Math.random() * 6 - 3;
+                this.speedY = Math.random() * -5 - 5; // Initial upward burst
+                this.gravity = 0.2;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 10 - 5;
+                this.life = 100; // Frames to live
+            }
+
+            update() {
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                this.life--;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color;
+                // Draw a simple square confetti
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                
+                // Optional: Draw "web" lines occasionally
+                if (Math.random() > 0.95) {
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(Math.random() * 20 - 10, Math.random() * 20 - 10);
+                    ctx.stroke();
+                }
+                
+                ctx.restore();
+            }
+        }
+
+        function createExplosion(x, y) {
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Trigger function
+        function fireWebs() {
+            const centerX = width / 2;
+            const centerY = height / 2;
+            createExplosion(centerX, centerY);
+        }
+
+        // Initialize
+        animate();
+
+        // Fire automatically on load after a short delay
+        window.onload = () => {
+            setTimeout(() => {
+                fireWebs();
+                // Second burst
+                setTimeout(fireWebs, 500);
+            }, 800);
+        };
+    </script>
+</body>
+</html>
