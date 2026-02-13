@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Kyle Ducay!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <title>Polygons - Math Notes</title>
     <style>
-        /* --- RESET & BASE --- */
+        @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;600;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -14,299 +14,477 @@
         }
 
         body {
-            background-color: #011F66; /* Midnight Blue */
-            font-family: 'Bangers', cursive;
-            height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .notebook {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #16213e;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f3460, #533483);
+            padding: 2rem 2.5rem;
             position: relative;
-            color: white;
+            overflow: hidden;
         }
 
-        /* --- BACKGROUND WEB PATTERN (CSS GRADIENTS) --- */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at center, transparent 0%, transparent 10%, rgba(255, 255, 255, 0.05) 10%, rgba(255, 255, 255, 0.05) 11%, transparent 11%),
-                radial-gradient(circle at center, transparent 0%, transparent 20%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.05) 21%, transparent 21%),
-                radial-gradient(circle at center, transparent 0%, transparent 30%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.05) 31%, transparent 31%),
-                radial-gradient(circle at center, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0.05) 41%, transparent 41%),
-                repeating-conic-gradient(from 0deg, transparent 0deg, transparent 10deg, rgba(255, 255, 255, 0.05) 10deg, rgba(255, 255, 255, 0.05) 11deg);
-            z-index: 0;
-            opacity: 0.6;
-        }
-
-        /* --- CORNER WEBS --- */
-        .corner-web {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-top: 5px solid rgba(255,255,255,0.2);
-            border-right: 5px solid rgba(255,255,255,0.2);
-            border-radius: 0 100% 0 0;
-            z-index: 1;
-        }
-
-        .top-left { top: 0; left: 0; transform: rotate(270deg); }
-        .top-right { top: 0; right: 0; }
-        .bottom-left { bottom: 0; left: 0; transform: rotate(180deg); }
-        .bottom-right { bottom: 0; right: 0; transform: rotate(90deg); }
-
-        /* --- CANVAS FOR CONFETTI --- */
-        #confetti-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        /* --- HERO CARD --- */
-        .card-container {
-            z-index: 10;
-            text-align: center;
-            perspective: 1000px;
-        }
-
-        .card {
-            background: linear-gradient(135deg, #E23636 0%, #b30000 100%); /* Spidey Red */
-            border: 4px solid white;
-            padding: 2rem 4rem;
-            border-radius: 20px;
-            box-shadow: 
-                0 0 20px #E23636, 
-                0 0 50px rgba(1, 31, 102, 0.8),
-                inset 0 0 20px rgba(0,0,0,0.3);
-            position: relative;
-            transform-style: preserve-3d;
-            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-            max-width: 90%;
-        }
-
-        /* Mask/Eyes decoration on top of card */
-        .spidey-eyes {
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 60px;
-            background: white;
-            clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
-            border: 3px solid black;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .spidey-eyes::before, .spidey-eyes::after {
+        .header::after {
             content: '';
-            width: 40px;
-            height: 100%;
-            background: #011F66; /* Eye detail */
-            clip-path: ellipse(40% 50% at 50% 50%);
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
         }
 
-        /* --- TYPOGRAPHY --- */
-        h1 {
-            font-size: 4rem;
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e94560;
             text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 10px;
-            text-shadow: 4px 4px 0px #011F66, 6px 6px 0px black;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
-        h2 {
-            font-size: 2.5rem;
-            color: #FFD700; /* Gold/Yellow for contrast */
-            text-shadow: 2px 2px 0px black;
-            margin-bottom: 20px;
+        .header .subtitle {
+            color: #a8a8b3;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            letter-spacing: 1px;
         }
 
-        .date {
+        .content {
+            padding: 2rem 2.5rem 3rem;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #1a1a3e;
+            border-radius: 12px;
+            border-left: 4px solid #e94560;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e94560;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title .icon {
+            font-size: 1.4rem;
+        }
+
+        /* Basic Geometry Symbols */
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .symbol-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 1rem;
+            background: #0f3460;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .symbol-item:hover {
+            transform: translateX(5px);
+        }
+
+        .symbol-notation {
+            font-family: 'Patrick Hand', cursive;
             font-size: 1.5rem;
-            background-color: black;
-            color: white;
-            display: inline-block;
-            padding: 5px 15px;
-            transform: rotate(-2deg);
-            box-shadow: 3px 3px 0px white;
+            color: #e94560;
+            min-width: 50px;
+            text-align: center;
         }
 
-        .action-btn {
-            margin-top: 30px;
-            padding: 15px 30px;
-            font-family: 'Bangers', cursive;
-            font-size: 1.5rem;
-            background-color: #011F66;
-            color: white;
-            border: 2px solid white;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            box-shadow: 4px 4px 0px black;
+        .symbol-label {
+            color: #c4c4ce;
+            font-size: 0.95rem;
+        }
+
+        /* Definition Box */
+        .definition-box {
+            background: linear-gradient(135deg, #0f3460, #1a1a4e);
+            border: 1px solid #533483;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .definition-box .term {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #53d8fb;
+        }
+
+        .definition-box .meaning {
+            color: #c4c4ce;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Polygon Diagram */
+        .diagram-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .diagram-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: #0f3460;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 200px;
+            max-width: 320px;
+        }
+
+        .diagram-card h3 {
+            color: #53d8fb;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .action-btn:hover {
-            transform: scale(1.1) rotate(2deg);
-            background-color: #022a8a;
+        .diagram-svg {
+            margin: 0 auto;
         }
 
-        .action-btn:active {
-            transform: scale(0.95);
+        .label-list {
+            margin-top: 1rem;
+            text-align: left;
         }
 
-        /* --- ANIMATIONS --- */
-        @keyframes popIn {
-            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        .label-list li {
+            list-style: none;
+            padding: 0.3rem 0;
+            color: #a8a8b3;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        /* Mobile Adjustments */
+        .label-list li::before {
+            content: '▸';
+            color: #e94560;
+        }
+
+        .label-list .highlight {
+            color: #53d8fb;
+            font-weight: 600;
+        }
+
+        /* Types Grid */
+        .types-grid {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .type-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background: #0f3460;
+            border-radius: 10px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .type-card:nth-child(1) { border-left-color: #e94560; }
+        .type-card:nth-child(2) { border-left-color: #53d8fb; }
+        .type-card:nth-child(3) { border-left-color: #533483; }
+        .type-card:nth-child(4) { border-left-color: #f5a623; }
+        .type-card:nth-child(5) { border-left-color: #7ed321; }
+        .type-card:nth-child(6) { border-left-color: #bd10e0; }
+
+        .type-card:hover {
+            transform: translateX(8px);
+            background: #12305a;
+        }
+
+        .type-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e94560;
+            min-width: 40px;
+        }
+
+        .type-card:nth-child(2) .type-number { color: #53d8fb; }
+        .type-card:nth-child(3) .type-number { color: #533483; }
+        .type-card:nth-child(4) .type-number { color: #f5a623; }
+        .type-card:nth-child(5) .type-number { color: #7ed321; }
+        .type-card:nth-child(6) .type-number { color: #bd10e0; }
+
+        .type-info {
+            flex: 1;
+        }
+
+        .type-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #e0e0e0;
+        }
+
+        .type-desc {
+            color: #a8a8b3;
+            font-size: 0.88rem;
+            margin-top: 0.2rem;
+        }
+
+        .type-badge {
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-sides { background: rgba(233, 69, 96, 0.2); color: #e94560; }
+        .badge-angles { background: rgba(83, 216, 251, 0.2); color: #53d8fb; }
+        .badge-both { background: rgba(83, 52, 131, 0.2); color: #a77bca; }
+        .badge-none { background: rgba(245, 166, 35, 0.2); color: #f5a623; }
+        .badge-convex { background: rgba(126, 211, 33, 0.2); color: #7ed321; }
+        .badge-concave { background: rgba(189, 16, 224, 0.2); color: #bd10e0; }
+
+        /* Responsive */
         @media (max-width: 600px) {
-            h1 { font-size: 3rem; }
-            h2 { font-size: 1.8rem; }
-            .card { padding: 2rem 1rem; width: 90%; }
-            .corner-web { width: 100px; height: 100px; }
+            body {
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            .symbols-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .diagram-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .diagram-card {
+                max-width: 100%;
+            }
+
+            .type-card {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="notebook">
+        <!-- Header -->
+        <div class="header">
+            <h1>Polygons</h1>
+            <div class="subtitle">Mathematics — Geometry Notes</div>
+        </div>
 
-    <div class="corner-web top-left"></div>
-    <div class="corner-web top-right"></div>
-    <div class="corner-web bottom-left"></div>
-    <div class="corner-web bottom-right"></div>
+        <div class="content">
 
-    <canvas id="confetti-canvas"></canvas>
+            <!-- Basic Symbols Section -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">📐</span> Basic Geometry Symbols
+                </div>
+                <div class="symbols-grid">
+                    <div class="symbol-item">
+                        <span class="symbol-notation">←→</span>
+                        <span class="symbol-label"><strong>Line</strong> — extends infinitely in both directions</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol-notation">——</span>
+                        <span class="symbol-label"><strong>Line Segment</strong> — has two endpoints</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol-notation">↔</span>
+                        <span class="symbol-label"><strong>Collinear Points</strong> — points on the same line</span>
+                    </div>
+                    <div class="symbol-item">
+                        <span class="symbol-notation">→</span>
+                        <span class="symbol-label"><strong>Ray</strong> — extends infinitely in one direction</span>
+                    </div>
+                </div>
+            </div>
 
-    <div class="card-container">
-        <div class="card">
-            <div class="spidey-eyes"></div>
-            
-            <p style="font-size: 1.2rem; margin-bottom: 5px; text-shadow: 1px 1px 0 black;">Your Friendly Neighborhood Greeting</p>
-            <h1>HAPPY BIRTHDAY!</h1>
-            <h2>KYLE DUCAY</h2>
-            <div class="date">DECEMBER 23, 2025</div>
-            
-            <br>
-            <button class="action-btn" onclick="fireWebs()">Shoot Web!</button>
+            <!-- Polygon Definition -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">📝</span> Definition
+                </div>
+                <div class="definition-box">
+                    <span class="term">Polygon</span>
+                    <div class="meaning">
+                        A <strong>closed, plain (flat) figure</strong> that has <strong>many sides</strong> (3 or more straight sides).
+                    </div>
+                </div>
+
+                <!-- Diagrams: Convex vs Concave -->
+                <div class="diagram-container">
+                    <!-- Convex Polygon -->
+                    <div class="diagram-card">
+                        <h3>Convex Polygon</h3>
+                        <svg class="diagram-svg" width="180" height="160" viewBox="0 0 180 160">
+                            <!-- Pentagon shape -->
+                            <polygon points="90,15 160,55 140,135 40,135 20,55"
+                                fill="none" stroke="#53d8fb" stroke-width="2.5"/>
+                            <!-- Vertices -->
+                            <circle cx="90" cy="15" r="4" fill="#e94560"/>
+                            <circle cx="160" cy="55" r="4" fill="#e94560"/>
+                            <circle cx="140" cy="135" r="4" fill="#e94560"/>
+                            <circle cx="40" cy="135" r="4" fill="#e94560"/>
+                            <circle cx="20" cy="55" r="4" fill="#e94560"/>
+                            <!-- Diagonal (dashed) -->
+                            <line x1="20" y1="55" x2="140" y2="135"
+                                stroke="#f5a623" stroke-width="1.5" stroke-dasharray="5,5"/>
+                            <!-- Interior angle arc -->
+                            <path d="M 55,135 A 20,20 0 0,1 40,118" fill="none" stroke="#7ed321" stroke-width="1.5"/>
+                            <!-- Labels -->
+                            <text x="92" y="10" fill="#e94560" font-size="10" text-anchor="middle">vertex</text>
+                            <text x="80" y="145" fill="#53d8fb" font-size="10" text-anchor="middle">side</text>
+                            <text x="85" y="105" fill="#f5a623" font-size="10" text-anchor="middle">diagonal</text>
+                            <text x="60" y="120" fill="#7ed321" font-size="9" text-anchor="middle">interior ∠</text>
+                        </svg>
+                        <div class="label-list">
+                            <ul>
+                                <li><span class="highlight">Vertex</span> — corner point</li>
+                                <li><span class="highlight">Side</span> — edge of polygon</li>
+                                <li><span class="highlight">Diagonal</span> — connects non-adjacent vertices</li>
+                                <li><span class="highlight">Interior Angle</span> — angle inside</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Concave Polygon -->
+                    <div class="diagram-card">
+                        <h3>Concave Polygon</h3>
+                        <svg class="diagram-svg" width="180" height="160" viewBox="0 0 180 160">
+                            <!-- Concave (arrow/chevron-like) shape -->
+                            <polygon points="90,10 155,65 130,145 50,145 25,65"
+                                fill="none" stroke="#bd10e0" stroke-width="2.5"/>
+                            <!-- "Dent" to make it concave — redraw with concavity -->
+                            <polygon points="90,10 160,70 90,55 20,70"
+                                fill="none" stroke="#bd10e0" stroke-width="2.5"/>
+                            <!-- Full concave shape -->
+                            <polygon points="40,140 20,70 90,10 160,70 140,140 90,100"
+                                fill="rgba(189,16,224,0.08)" stroke="#bd10e0" stroke-width="2.5"/>
+                            <!-- Exterior angle indicator -->
+                            <path d="M 90,100 L 90,65" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <text x="100" y="78" fill="#f5a623" font-size="9">exterior ∠</text>
+                            <!-- Reflex angle arc -->
+                            <path d="M 105,105 A 18,18 0 0,0 75,105" fill="none" stroke="#e94560" stroke-width="1.5"/>
+                        </svg>
+                        <div class="label-list">
+                            <ul>
+                                <li><span class="highlight">Concave</span> — has an inward "dent"</li>
+                                <li>At least one <span class="highlight">interior angle &gt; 180°</span></li>
+                                <li>Has an <span class="highlight">exterior angle</span> pointing inward</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Types of Polygon -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="icon">🔷</span> Types of Polygon
+                </div>
+                <div class="types-grid">
+                    <!-- 1 -->
+                    <div class="type-card">
+                        <span class="type-number">1</span>
+                        <div class="type-info">
+                            <div class="type-name">Equilateral Polygon</div>
+                            <div class="type-desc">All <strong>sides</strong> are equal in length</div>
+                        </div>
+                        <span class="type-badge badge-sides">Sides</span>
+                    </div>
+                    <!-- 2 -->
+                    <div class="type-card">
+                        <span class="type-number">2</span>
+                        <div class="type-info">
+                            <div class="type-name">Equiangular Polygon</div>
+                            <div class="type-desc">All <strong>angles</strong> are equal</div>
+                        </div>
+                        <span class="type-badge badge-angles">Angles</span>
+                    </div>
+                    <!-- 3 -->
+                    <div class="type-card">
+                        <span class="type-number">3</span>
+                        <div class="type-info">
+                            <div class="type-name">Regular Polygon</div>
+                            <div class="type-desc">All <strong>sides and angles</strong> are equal</div>
+                        </div>
+                        <span class="type-badge badge-both">Both</span>
+                    </div>
+                    <!-- 4 -->
+                    <div class="type-card">
+                        <span class="type-number">4</span>
+                        <div class="type-info">
+                            <div class="type-name">Irregular Polygon</div>
+                            <div class="type-desc"><strong>Neither</strong> equilateral nor equiangular</div>
+                        </div>
+                        <span class="type-badge badge-none">Neither</span>
+                    </div>
+                    <!-- 5 -->
+                    <div class="type-card">
+                        <span class="type-number">5</span>
+                        <div class="type-info">
+                            <div class="type-name">Convex</div>
+                            <div class="type-desc">All interior angles <strong>&lt; 180°</strong>; any straight line crosses at most <strong>2 sides</strong></div>
+                        </div>
+                        <span class="type-badge badge-convex">Convex</span>
+                    </div>
+                    <!-- 6 -->
+                    <div class="type-card">
+                        <span class="type-number">6</span>
+                        <div class="type-info">
+                            <div class="type-name">Concave</div>
+                            <div class="type-desc">At least one interior angle <strong>&gt; 180°</strong>; a straight line can cross <strong>more than 2 sides</strong></div>
+                        </div>
+                        <span class="type-badge badge-concave">Concave</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <script>
-        // Setup Canvas
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-
-        window.addEventListener('resize', () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        });
-
-        // Particle System
-        const particles = [];
-        const colors = ['#E23636', '#011F66', '#FFFFFF', '#FFD700']; // Red, Blue, White, Gold
-
-        class Particle {
-            constructor(x, y, type) {
-                this.x = x;
-                this.y = y;
-                this.size = Math.random() * 8 + 4;
-                this.speedX = Math.random() * 6 - 3;
-                this.speedY = Math.random() * -5 - 5; // Initial upward burst
-                this.gravity = 0.2;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.rotation = Math.random() * 360;
-                this.rotationSpeed = Math.random() * 10 - 5;
-                this.life = 100; // Frames to live
-            }
-
-            update() {
-                this.speedY += this.gravity;
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.rotation += this.rotationSpeed;
-                this.life--;
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.fillStyle = this.color;
-                // Draw a simple square confetti
-                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-                
-                // Optional: Draw "web" lines occasionally
-                if (Math.random() > 0.95) {
-                    ctx.strokeStyle = 'white';
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(Math.random() * 20 - 10, Math.random() * 20 - 10);
-                    ctx.stroke();
-                }
-                
-                ctx.restore();
-            }
-        }
-
-        function createExplosion(x, y) {
-            for (let i = 0; i < 50; i++) {
-                particles.push(new Particle(x, y));
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                    i--;
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-
-        // Trigger function
-        function fireWebs() {
-            const centerX = width / 2;
-            const centerY = height / 2;
-            createExplosion(centerX, centerY);
-        }
-
-        // Initialize
-        animate();
-
-        // Fire automatically on load after a short delay
-        window.onload = () => {
-            setTimeout(() => {
-                fireWebs();
-                // Second burst
-                setTimeout(fireWebs, 500);
-            }, 800);
-        };
-    </script>
 </body>
 </html>
